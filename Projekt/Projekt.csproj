@@ -76,6 +76,7 @@
     <Compile Include="Model\DAL\MovieDAL.cs" />
     <Compile Include="Model\DAL\StarringDAL.cs" />
     <Compile Include="Model\Movie.cs" />
+    <Compile Include="Model\Service.cs" />
     <Compile Include="Model\Starring.cs" />
     <Compile Include="Pages\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>

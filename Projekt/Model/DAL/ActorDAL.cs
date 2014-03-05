@@ -32,7 +32,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut alla skådespelare som ä för en specifik film
+        //Hämtar ut alla skådespelare som är för en specifik film
         public IEnumerable<Actor> GetMovieActorById(int movieID)
         {
             using (var conn = CreateConnection())
@@ -73,6 +73,51 @@ namespace Projekt.Model.DAL
                 catch
                 {
                     throw new ApplicationException("An error occured in the data access layer.");
+                }
+            }
+        }
+
+        //Hämtar ut alla skådespelare från databasen
+        public IEnumerable<Actor> GetActors()
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var actors = new List<Actor>(50);
+
+
+                    var cmd = new SqlCommand("Person.uspGetContacts", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var actorIdIndex = reader.GetOrdinal("ActorID");
+                        var firstNameIndex = reader.GetOrdinal("Firstname");
+                        var lastNameIndex = reader.GetOrdinal("Lastname");
+                        var bornIndex = reader.GetOrdinal("Born");
+
+                        while (reader.Read())
+                        {
+                            actors.Add(new Actor
+                            {
+                                ActorID = reader.GetInt32(actorIdIndex),
+                                FirstName = reader.GetString(firstNameIndex),
+                                LastName = reader.GetString(lastNameIndex),
+                                Born = reader.GetString(bornIndex)
+                            });
+                        }
+                    }
+                    actors.TrimExcess();
+
+
+                    return actors;
+                }
+                catch
+                {
+                    throw new ApplicationException("An error occured while getting actors from the database.");
                 }
             }
         }
