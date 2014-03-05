@@ -16,7 +16,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspRemoveContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeletetActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = actorID;
@@ -41,7 +41,7 @@ namespace Projekt.Model.DAL
                 {
                     var actors = new List<Actor>(10);
 
-                    var cmd = new SqlCommand("Person.uspGetContact", conn);
+                    var cmd = new SqlCommand("", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@MovieID", movieID);
@@ -87,7 +87,7 @@ namespace Projekt.Model.DAL
                     var actors = new List<Actor>(50);
 
 
-                    var cmd = new SqlCommand("Person.uspGetContacts", conn);
+                    var cmd = new SqlCommand("appSchema.usp_ListActors", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -129,7 +129,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspAddContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_InsertActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = actor.FirstName;
@@ -158,7 +158,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspUpdateContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = actor.ActorID;

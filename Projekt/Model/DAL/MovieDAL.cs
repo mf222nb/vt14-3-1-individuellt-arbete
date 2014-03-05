@@ -16,7 +16,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspRemoveContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = movieID;
@@ -39,7 +39,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("Person.uspGetContact", conn);
+                    var cmd = new SqlCommand("", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@MovieID", movieID);
@@ -83,7 +83,7 @@ namespace Projekt.Model.DAL
                     var movies = new List<Movie>(100);
 
 
-                    var cmd = new SqlCommand("Person.uspGetContacts", conn);
+                    var cmd = new SqlCommand("appShema.usp_ListMovies", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -111,7 +111,7 @@ namespace Projekt.Model.DAL
                 }
                 catch
                 {
-                    throw new ApplicationException("An error occured while getting ccontacts from the database.");
+                    throw new ApplicationException("An error occured while getting movies from the database.");
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspAddContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_InsertMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@Titel", SqlDbType.NVarChar, 50).Value = movie.Titel;
@@ -151,7 +151,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Person.uspUpdateContact", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = movie.MovieID;

@@ -9,6 +9,9 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <header>
+        <h1>Filmer</h1>
+    </header>
     <form id="form1" runat="server">
     <div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
