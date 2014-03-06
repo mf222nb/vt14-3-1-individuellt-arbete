@@ -60,5 +60,57 @@ namespace Projekt.Model
                 MovieDAL.UpdateMovie(movie);
             }
         }
+
+        //Alla metoder som har med skådespelare att göra
+        public static void DeleteActor(Actor actor)
+        {
+            DeleteActor(actor.ActorID);
+        }
+
+        public static void DeleteActor(int actorId)
+        {
+            ActorDAL.DeleteActor(actorId);
+        }
+
+        public static IEnumerable<Actor> GetMovieActor(int movieId)
+        {
+            return ActorDAL.GetMovieActorById(movieId);
+        }
+
+        public static IEnumerable<Actor> GetActors()
+        {
+            return ActorDAL.GetActors();
+        }
+
+        public static Actor GetActor(int actorId)
+        {
+            return ActorDAL.GetActorById(actorId);
+        }
+
+        public static void SaveActor(Actor actor)
+        {
+            if (actor.ActorID == 0)
+            {
+                ActorDAL.InsertActor(actor);
+            }
+            else
+            {
+                ActorDAL.UpdateActor(actor);
+            }
+        }
+
+        //Metoder som har med medverkan att göra
+        public static void SaveStarring(Starring starring)
+        {
+            if (starring.StarringID == 0)
+            {
+                StarringDAL.InsertStarring(starring);
+            }
+        }
+
+        public static void DeleteStarring(int starringId)
+        {
+            StarringDAL.DeleteStarring(starringId);
+        }
     }
 }

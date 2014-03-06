@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projekt.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,17 @@ namespace Projekt.Pages
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        // The return type can be changed to IEnumerable, however to support
+        // paging and sorting, the following parameters must be added:
+        //     int maximumRows
+        //     int startRowIndex
+        //     out int totalRowCount
+        //     string sortByExpression
+        public IEnumerable<Movie> MovieListView_GetData()
+        {
+            return Service.GetMovies();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    var cmd = new SqlCommand("", conn);
+                    var cmd = new SqlCommand("appSchema.usp_ListOneMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@MovieID", movieID);
@@ -82,8 +82,7 @@ namespace Projekt.Model.DAL
                 {
                     var movies = new List<Movie>(100);
 
-
-                    var cmd = new SqlCommand("appShema.usp_ListMovies", conn);
+                    var cmd = new SqlCommand("appSchema.usp_ListMovies", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     conn.Open();
@@ -105,7 +104,6 @@ namespace Projekt.Model.DAL
                         }
                     }
                     movies.TrimExcess();
-
 
                     return movies;
                 }

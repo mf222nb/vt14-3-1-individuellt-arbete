@@ -5,19 +5,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="~/Content/style.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <header>
-        <h1>Filmer</h1>
+        <div>
+            <h1>Filmer</h1>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <asp:HyperLink ID="HomeHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Filmer</asp:HyperLink>
+                </li>
+                <li>
+                    <asp:HyperLink ID="CreateHyperLink2" runat="server" NavigateUrl='<%$ RouteUrl:routename=CreateMovie %>'>Ny film</asp:HyperLink>
+                </li>
+            </ul>
+        </nav>
     </header>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
 </body>
 </html>

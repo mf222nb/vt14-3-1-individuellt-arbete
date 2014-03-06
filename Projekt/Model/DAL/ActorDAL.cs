@@ -41,7 +41,7 @@ namespace Projekt.Model.DAL
                 {
                     var actors = new List<Actor>(10);
 
-                    var cmd = new SqlCommand("", conn);
+                    var cmd = new SqlCommand("appSchema.usp_ListMovieActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@MovieID", movieID);
@@ -118,6 +118,46 @@ namespace Projekt.Model.DAL
                 catch
                 {
                     throw new ApplicationException("An error occured while getting actors from the database.");
+                }
+            }
+        }
+
+        public Actor GetActorById(int actorId)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("appSchema.usp_ListOneActor", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ActorID", actorId);
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var actorIdIndex = reader.GetOrdinal("ActorID");
+                        var firstNameIndex = reader.GetOrdinal("Firstname");
+                        var lastNameIndex = reader.GetOrdinal("Lastname");
+                        var bornIndex = reader.GetOrdinal("Born");
+
+                        while (reader.Read())
+                        {
+                            return new Actor
+                            {
+                                ActorID = reader.GetInt32(actorIdIndex),
+                                FirstName = reader.GetString(firstNameIndex),
+                                LastName = reader.GetString(lastNameIndex),
+                                Born = reader.GetString(bornIndex)
+                            };
+                        }
+                    }
+                    return null;
+                }
+                catch
+                {
+                    throw new ApplicationException("An error occured in the data access layer.");
                 }
             }
         }
