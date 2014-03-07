@@ -21,18 +21,14 @@
                 <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" Text="Ta bort" OnClientClick="return confirm('Är du säker att du vill ta bort filmen')"></asp:LinkButton>
                 <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
             </div>
-            <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Actor" DataKeyNames="ActorID"
+            <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Starring" DataKeyNames="StarringID, MovieID, ActorID"
                 SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem">
                 <LayoutTemplate>
-                    <h2>Skådespelare
+                    <h2>Roller
                     </h2>
                     <table>
                         <tr>
-                            <th>Förnamn
-                            </th>
-                            <th>Efternamn
-                            </th>
-                            <th>Födelsedatum
+                            <th>Roller
                             </th>
                         </tr>
                         <asp:PlaceHolder ID="itemPlaceHolder" runat="server"></asp:PlaceHolder>
@@ -41,13 +37,7 @@
                 <ItemTemplate>
                     <tr>
                         <td>
-                            <%# Item.FirstName %>
-                        </td>
-                        <td>
-                            <%# Item.LastName %>
-                        </td>
-                        <td>
-                            <%# Item.Born %>
+                            <%# Item.Character %>
                         </td>
                         <td>
                             <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
@@ -57,17 +47,11 @@
                 <EditItemTemplate>
                     <tr>
                         <td>
-                            <asp:TextBox ID="FirstName" runat="server" Text='<%# BindItem.FirstName %>' />
+                            <asp:TextBox ID="Character" runat="server" Text='<%# BindItem.Character %>' />
                         </td>
                         <td>
-                            <asp:TextBox ID="LastName" runat="server" Text='<%# BindItem.LastName %>' />
-                        </td>
-                        <td>
-                            <asp:TextBox ID="Born" runat="server" Text='<%# BindItem.Born %>' />
-                        </td>
-                        <td>
-                            <asp:LinkButton runat="server" CommandName="Update" Text="Spara"></asp:LinkButton>
-                            <asp:LinkButton runat="server" CommandName="Cancel" Text="Avbryt"></asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Update" Text="Spara"></asp:LinkButton>
+                            <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Cancel" Text="Avbryt"></asp:LinkButton>
                         </td>
                     </tr>
                 </EditItemTemplate>

@@ -106,11 +106,30 @@ namespace Projekt.Model
             {
                 StarringDAL.InsertStarring(starring);
             }
+            else
+            {
+                StarringDAL.UpdateCharacter(starring);
+            }
+        }
+
+        public static void DeleteStarring(Starring starring)
+        {
+            DeleteStarring(starring.StarringID);
         }
 
         public static void DeleteStarring(int starringId)
         {
             StarringDAL.DeleteStarring(starringId);
+        }
+
+        public static IEnumerable<Starring> GetMovieCharacters(int movieId)
+        {
+            return StarringDAL.GetMovieRoles(movieId);
+        }
+
+        public static Starring GetCharacter(int starringId)
+        {
+            return StarringDAL.GetCharacterById(starringId);
         }
     }
 }

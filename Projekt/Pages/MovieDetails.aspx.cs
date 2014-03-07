@@ -23,17 +23,6 @@ namespace Projekt.Pages
             return Service.GetMovie(id);
         }
 
-        // The return type can be changed to IEnumerable, however to support
-        // paging and sorting, the following parameters must be added:
-        //     int maximumRows
-        //     int startRowIndex
-        //     out int totalRowCount
-        //     string sortByExpression
-        public IEnumerable<Actor> ActorListView_GetData([RouteData]int id)
-        {
-            return Service.GetMovieActor(id);
-        }
-
         // The id parameter name should match the DataKeyNames value set on the control
         public void MovieFormView_DeleteItem([RouteData]int id)
         {
@@ -59,22 +48,33 @@ namespace Projekt.Pages
             }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
-        public void ActorListView_UpdateItem(int ActorID)
+        // The return type can be changed to IEnumerable, however to support
+        // paging and sorting, the following parameters must be added:
+        //     int maximumRows
+        //     int startRowIndex
+        //     out int totalRowCount
+        //     string sortByExpression
+        public IEnumerable<Starring> ActorListView_GetData([RouteData]int id)
         {
-            var actor = Service.GetActor(ActorID);
+            return Service.GetMovieCharacters(id);
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ActorListView_UpdateItem(int StarringID)
+        {
+            var character = Service.GetCharacter(StarringID);
             // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (actor == null)
+            if (character == null)
             {
                 // The item wasn't found
-                ModelState.AddModelError("", String.Format("Ett fel inträffade när skådespelaren med ID {0} skulle hämtas", ActorID));
+                ModelState.AddModelError("", String.Format("Item with id {0} was not found", StarringID));
                 return;
             }
-            TryUpdateModel(actor);
+            TryUpdateModel(character);
             if (ModelState.IsValid)
             {
                 // Save changes here, e.g. MyDataLayer.SaveChanges();
-                Service.SaveActor(actor);
+                Service.SaveStarring(character);
             }
         }
     }

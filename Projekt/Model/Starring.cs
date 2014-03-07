@@ -10,5 +10,6 @@ namespace Projekt.Model
         public int StarringID { get; set; }
         public int MovieID { get; set; }
         public int ActorID { get; set; }
+        public string Character { get; set; }
     }
 }
