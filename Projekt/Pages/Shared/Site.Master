@@ -20,6 +20,9 @@
                     <asp:HyperLink ID="HomeHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Filmer</asp:HyperLink>
                 </li>
                 <li>
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%$ RouteUrl:routname=Actors %>'>Skådespelare</asp:HyperLink>
+                </li>
+                <li>
                     <asp:HyperLink ID="CreateHyperLink2" runat="server" NavigateUrl='<%$ RouteUrl:routename=CreateMovie %>'>Ny film</asp:HyperLink>
                 </li>
             </ul>

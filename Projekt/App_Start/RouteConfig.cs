@@ -13,6 +13,7 @@ namespace Projekt
             routes.MapPageRoute("Movies", "filmer", "~/Pages/MovieList.aspx");
             routes.MapPageRoute("MovieDetails", "filmer/{id}", "~/Pages/MovieDetails.aspx");
             routes.MapPageRoute("CreateMovie", "ny/film", "~/Pages/CreateMovie.aspx");
+            routes.MapPageRoute("Actors", "skådespelare", "~/Pages/ActorList");
 
             routes.MapPageRoute("Default", "", "~/Pages/MovieList.aspx");
         }

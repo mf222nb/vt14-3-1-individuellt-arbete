@@ -21,8 +21,9 @@
                 <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" Text="Ta bort" OnClientClick="return confirm('Är du säker att du vill ta bort filmen')"></asp:LinkButton>
                 <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
             </div>
+            <%--Listar rollerna som tillhör filmen --%>
             <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Starring" DataKeyNames="StarringID, MovieID, ActorID"
-                SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem">
+                SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" DeleteMethod="ActorListView_DeleteItem">
                 <LayoutTemplate>
                     <h2>Roller
                     </h2>
@@ -40,6 +41,7 @@
                             <%# Item.Character %>
                         </td>
                         <td>
+                            <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" Text="Ta bort" OnClientClick="return confirm('Är du säker att du vill ta bort rollen')"></asp:LinkButton>
                             <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
                         </td>
                     </tr>

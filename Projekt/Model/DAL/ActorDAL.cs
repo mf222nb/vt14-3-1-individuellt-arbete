@@ -122,6 +122,7 @@ namespace Projekt.Model.DAL
             }
         }
 
+        //Hämtar en skådespelare med ett visst ID
         public Actor GetActorById(int actorId)
         {
             using (var conn = CreateConnection())

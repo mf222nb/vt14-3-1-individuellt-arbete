@@ -77,5 +77,11 @@ namespace Projekt.Pages
                 Service.SaveStarring(character);
             }
         }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void ActorListView_DeleteItem(int StarringID)
+        {
+            Service.DeleteStarring(StarringID);
+        }
     }
 }

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\style.css" />
+    <Content Include="Pages\ActorList.aspx" />
     <Content Include="Pages\Create.aspx" />
     <Content Include="Pages\MovieDetails.aspx" />
     <Content Include="Pages\MovieList.aspx" />
@@ -82,6 +83,13 @@
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\Starring.cs" />
+    <Compile Include="Pages\ActorList.aspx.cs">
+      <DependentUpon>ActorList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ActorList.aspx.designer.cs">
+      <DependentUpon>ActorList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
