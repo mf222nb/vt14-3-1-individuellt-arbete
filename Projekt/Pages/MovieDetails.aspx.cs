@@ -11,6 +11,7 @@ namespace Projekt.Pages
 {
     public partial class MovieDetails : System.Web.UI.Page
     {
+        public int MovieID { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -20,6 +21,7 @@ namespace Projekt.Pages
         // or be decorated with a value provider attribute, e.g. [QueryString]int id
         public Movie MovieFormView_GetItem([RouteData]int id)
         {
+            MovieID = id;
             return Service.GetMovie(id);
         }
 
@@ -67,7 +69,7 @@ namespace Projekt.Pages
             if (character == null)
             {
                 // The item wasn't found
-                ModelState.AddModelError("", String.Format("Item with id {0} was not found", StarringID));
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle hämtas", StarringID));
                 return;
             }
             TryUpdateModel(character);
@@ -82,6 +84,23 @@ namespace Projekt.Pages
         public void ActorListView_DeleteItem(int StarringID)
         {
             Service.DeleteStarring(StarringID);
+        }
+
+        public IEnumerable<Actor> ActorDropDownList_GetData()
+        {
+            return Service.GetActors();
+        }
+
+        public void ActorListView_InsertItem()
+        {
+            var item = new Starring();
+            TryUpdateModel(item);
+            if (ModelState.IsValid)
+            {
+                // Save changes here
+                item.MovieID = MovieID;
+                Service.SaveStarring(item);
+            }
         }
     }
 }

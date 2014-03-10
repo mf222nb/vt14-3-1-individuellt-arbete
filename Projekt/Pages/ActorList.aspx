@@ -1,6 +1,8 @@
-﻿<%@ Page Title="Skådespelare" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="ActorList.aspx.cs" Inherits="Projekt.Pages.ActorList" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="ActorList.aspx.cs" Inherits="Projekt.Pages.ActorList" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <%-- Listview för att visa alla skådespelare som finns i databasen --%>
     <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Actor" SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" DeleteMethod="ActorListView_DeleteItem"
         InsertMethod="ActorListView_InsertItem" InsertItemPosition="FirstItem"
         DataKeyNames="ActorID">

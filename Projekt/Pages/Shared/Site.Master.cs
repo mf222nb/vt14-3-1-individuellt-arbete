@@ -11,7 +11,8 @@ namespace Projekt.Pages.Shared
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            SuccessLabel.Text = this.GetTempData("SuccessMessage") as String;
+            SuccessPanel.Visible = !String.IsNullOrWhiteSpace(SuccessLabel.Text);
         }
     }
 }

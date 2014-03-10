@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Shared/Site.Master" AutoEventWireup="true" CodeBehind="MovieDetails.aspx.cs" Inherits="Projekt.Pages.MovieDetails" %>
 
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:FormView ID="MovieFormView" runat="server" ItemType="Projekt.Model.Movie" DataKeyNames="MovieID"
         DefaultMode="ReadOnly" RenderOuterTable="false" SelectMethod="MovieFormView_GetItem" DeleteMethod="MovieFormView_DeleteItem"
@@ -22,8 +23,8 @@
                 <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
             </div>
             <%--Listar rollerna som tillhör filmen --%>
-            <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Starring" DataKeyNames="StarringID, MovieID, ActorID"
-                SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" DeleteMethod="ActorListView_DeleteItem">
+            <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.StarringActor" DataKeyNames="StarringID, MovieID, ActorID"
+                SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" InsertMethod="ActorListView_InsertItem" DeleteMethod="ActorListView_DeleteItem" InsertItemPosition="LastItem">
                 <LayoutTemplate>
                     <h2>Roller
                     </h2>
@@ -41,6 +42,9 @@
                             <%# Item.Character %>
                         </td>
                         <td>
+                            <%# Item.ActorName %>
+                        </td>
+                        <td>
                             <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" Text="Ta bort" OnClientClick="return confirm('Är du säker att du vill ta bort rollen')"></asp:LinkButton>
                             <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera"></asp:LinkButton>
                         </td>
@@ -52,11 +56,32 @@
                             <asp:TextBox ID="Character" runat="server" Text='<%# BindItem.Character %>' />
                         </td>
                         <td>
+                            <asp:DropDownList ID="ActorDropDownList" runat="server" ItemType="Projekt.Model.Actor" DataTextField="Name"
+                                DataValueField="ActorID" SelectMethod="ActorDropDownList_GetData" SelectedValue='<%# BindItem.ActorID %>'>
+                            </asp:DropDownList>
+                        </td>
+                        <td>
                             <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Update" Text="Spara"></asp:LinkButton>
                             <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Cancel" Text="Avbryt"></asp:LinkButton>
                         </td>
                     </tr>
                 </EditItemTemplate>
+                <InsertItemTemplate>
+                    <tr>
+                        <td>
+                            <asp:TextBox ID="Character" runat="server" Text='<%# BindItem.Character %>'></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ActorDropDownList" runat="server" ItemType="Projekt.Model.Actor" DataTextField="Name"
+                                DataValueField="ActorID" SelectMethod="ActorDropDownList_GetData" SelectedValue='<%# BindItem.ActorID %>'>
+                            </asp:DropDownList>
+                        </td>
+                        <td>
+                            <asp:LinkButton ID="InsertLinkButton" runat="server" CommandName="Insert" Text="Lägg till"></asp:LinkButton>
+                            <asp:LinkButton ID="CancelLinkButton" runat="server" CommandName="Cancel" Text="Rensa"></asp:LinkButton>
+                        </td>
+                    </tr>
+                </InsertItemTemplate>
             </asp:ListView>
         </ItemTemplate>
         <EditItemTemplate>

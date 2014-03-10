@@ -56,19 +56,19 @@ namespace Projekt.Model.DAL
                 }
                 catch
                 {
-                    throw new ApplicationException("An error occured while adding the actor/movie to the database.");
+                    throw new ApplicationException("An error occured while adding the character to the database.");
                 }
             }
         }
 
         //Listar alla roller som är kopplade till någon film från databasen
-        public IEnumerable<Starring> GetMovieRoles(int movieID)
+        public IEnumerable<StarringActor> GetMovieRoles(int movieID)
         {
             using (var conn = CreateConnection())
             {
                 try
                 {
-                    var roles = new List<Starring>(100);
+                    var roles = new List<StarringActor>(100);
 
                     var cmd = new SqlCommand("appSchema.usp_ListStarring", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -83,15 +83,17 @@ namespace Projekt.Model.DAL
                         var movieIdIndex = reader.GetOrdinal("MovieID");
                         var actorIdIndex = reader.GetOrdinal("ActorID");
                         var characterIndex = reader.GetOrdinal("Character");
+                        var actorNameIndex = reader.GetOrdinal("Actorname");
 
                         while (reader.Read())
                         {
-                            roles.Add(new Starring
+                            roles.Add(new StarringActor
                             {
                                 StarringID = reader.GetInt32(starringIdIndex),
                                 MovieID = reader.GetInt32(movieIdIndex),
                                 ActorID = reader.GetInt32(actorIdIndex),
-                                Character = reader.GetString(characterIndex)
+                                Character = reader.GetString(characterIndex),
+                                ActorName = reader.GetString(actorNameIndex)
                             });
                         }
                     }
@@ -158,7 +160,7 @@ namespace Projekt.Model.DAL
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@StarringID", SqlDbType.Int, 4).Value = starring.StarringID;
-
+                    cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = starring.ActorID;
                     cmd.Parameters.Add("@Character", SqlDbType.NVarChar, 40).Value = starring.Character;
 
                     conn.Open();

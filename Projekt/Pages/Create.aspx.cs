@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projekt.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +14,19 @@ namespace Projekt.Pages
         {
 
         }
+
+        public void CreateFormView_InsertItem()
+        {
+            var item = new Movie();
+            TryUpdateModel(item);
+            if (ModelState.IsValid)
+            {
+                // Save changes here
+                Service.SaveMovie(item);
+                Response.RedirectToRoute("MovieDetails", new { id = item.MovieID });
+            }
+            
+        }
+
     }
 }

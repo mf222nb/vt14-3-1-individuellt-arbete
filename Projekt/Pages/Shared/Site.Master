@@ -20,7 +20,7 @@
                     <asp:HyperLink ID="HomeHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Filmer</asp:HyperLink>
                 </li>
                 <li>
-                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%$ RouteUrl:routname=Actors %>'>Skådespelare</asp:HyperLink>
+                    <asp:HyperLink ID="ActorHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Actors %>'>Skådespelare</asp:HyperLink>
                 </li>
                 <li>
                     <asp:HyperLink ID="CreateHyperLink2" runat="server" NavigateUrl='<%$ RouteUrl:routename=CreateMovie %>'>Ny film</asp:HyperLink>
@@ -30,12 +30,15 @@
     </header>
     <form id="form1" runat="server">
         <div>
+            <%-- Rätt och felmeddelanden visas här --%>
+            <asp:Panel ID="SuccessPanel" runat="server">
+                <asp:Label ID="SuccessLabel" runat="server" Text="Label"></asp:Label>
+            </asp:Panel>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </form>
     <footer>
-
     </footer>
 </body>
 </html>

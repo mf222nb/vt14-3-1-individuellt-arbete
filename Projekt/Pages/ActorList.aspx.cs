@@ -12,7 +12,7 @@ namespace Projekt.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         // The return type can be changed to IEnumerable, however to support
@@ -34,7 +34,7 @@ namespace Projekt.Pages
             if (actor == null)
             {
                 // The item wasn't found
-                ModelState.AddModelError("", String.Format("Item with id {0} was not found", ActorID));
+                ModelState.AddModelError(String.Empty, String.Format("skådespelaren med ID {0} hämtades inte", ActorID));
                 return;
             }
             TryUpdateModel(actor);
@@ -42,6 +42,7 @@ namespace Projekt.Pages
             {
                 // Save changes here, e.g. MyDataLayer.SaveChanges();
                 Service.SaveActor(actor);
+                Response.RedirectToRoute("Actors");
             }
         }
 
@@ -60,6 +61,7 @@ namespace Projekt.Pages
             {
                 // Save changes here
                 Service.SaveActor(actor);
+                Response.RedirectToRoute("Actors");
             }
         }
     }

@@ -11,5 +11,6 @@ namespace Projekt.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Born { get; set; }
+        public string Name { get { return String.Format("{0} {1}", FirstName, LastName); } }
     }
 }

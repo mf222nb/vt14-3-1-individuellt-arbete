@@ -70,6 +70,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Infrastructure\PageExtensions.cs" />
     <Compile Include="App_Infrastructure\ValidationExtension.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Global.asax.cs">
@@ -83,6 +84,7 @@
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Model\Starring.cs" />
+    <Compile Include="Model\StarringActor.cs" />
     <Compile Include="Pages\ActorList.aspx.cs">
       <DependentUpon>ActorList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

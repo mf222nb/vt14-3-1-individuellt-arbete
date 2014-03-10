@@ -72,11 +72,6 @@ namespace Projekt.Model
             ActorDAL.DeleteActor(actorId);
         }
 
-        public static IEnumerable<Actor> GetMovieActor(int movieId)
-        {
-            return ActorDAL.GetMovieActorById(movieId);
-        }
-
         public static IEnumerable<Actor> GetActors()
         {
             return ActorDAL.GetActors();
@@ -122,7 +117,7 @@ namespace Projekt.Model
             StarringDAL.DeleteStarring(starringId);
         }
 
-        public static IEnumerable<Starring> GetMovieCharacters(int movieId)
+        public static IEnumerable<StarringActor> GetMovieCharacters(int movieId)
         {
             return StarringDAL.GetMovieRoles(movieId);
         }

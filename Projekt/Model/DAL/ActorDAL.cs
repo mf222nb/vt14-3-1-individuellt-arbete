@@ -16,7 +16,7 @@ namespace Projekt.Model.DAL
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeletetActor", conn);
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = actorID;
@@ -28,51 +28,6 @@ namespace Projekt.Model.DAL
                 catch
                 {
                     throw new ApplicationException("An error occured while removing a actor from the database.");
-                }
-            }
-        }
-
-        //Hämtar ut alla skådespelare som är för en specifik film
-        public IEnumerable<Actor> GetMovieActorById(int movieID)
-        {
-            using (var conn = CreateConnection())
-            {
-                try
-                {
-                    var actors = new List<Actor>(10);
-
-                    var cmd = new SqlCommand("appSchema.usp_ListMovieActor", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@MovieID", movieID);
-
-                    conn.Open();
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        var actorIdIndex = reader.GetOrdinal("ActorID");
-                        var firstNameIndex = reader.GetOrdinal("FirstName");
-                        var lastNameIndex = reader.GetOrdinal("LastName");
-                        var bornIndex = reader.GetOrdinal("Born");
-
-                        while (reader.Read())
-                        {
-                            actors.Add(new Actor
-                            {
-                                ActorID = reader.GetInt32(actorIdIndex),
-                                FirstName = reader.GetString(firstNameIndex),
-                                LastName = reader.GetString(lastNameIndex),
-                                Born = reader.GetString(bornIndex)
-                            });
-                        }
-                    }
-                    actors.TrimExcess();
-
-                    return actors;
-                }
-                catch
-                {
-                    throw new ApplicationException("An error occured in the data access layer.");
                 }
             }
         }
