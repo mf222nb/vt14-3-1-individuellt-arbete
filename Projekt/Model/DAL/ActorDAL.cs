@@ -41,7 +41,6 @@ namespace Projekt.Model.DAL
                 {
                     var actors = new List<Actor>(50);
 
-
                     var cmd = new SqlCommand("appSchema.usp_ListActors", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -87,8 +86,8 @@ namespace Projekt.Model.DAL
                     var cmd = new SqlCommand("appSchema.usp_ListOneActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@ActorID", actorId);
-
+                    cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = actorId;
+                    
                     conn.Open();
 
                     using (var reader = cmd.ExecuteReader())
@@ -128,9 +127,9 @@ namespace Projekt.Model.DAL
                     SqlCommand cmd = new SqlCommand("appSchema.usp_InsertActor", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = actor.FirstName;
-                    cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 25).Value = actor.LastName;
-                    cmd.Parameters.Add("@Born", SqlDbType.NVarChar, 10).Value = actor.Born;
+                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 20).Value = actor.FirstName;
+                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 25).Value = actor.LastName;
+                    cmd.Parameters.Add("@Born", SqlDbType.VarChar, 10).Value = actor.Born;
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
@@ -159,9 +158,9 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = actor.ActorID;
 
-                    cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = actor.FirstName;
-                    cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 25).Value = actor.LastName;
-                    cmd.Parameters.Add("@Born", SqlDbType.NVarChar, 10).Value = actor.Born;
+                    cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 20).Value = actor.FirstName;
+                    cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 25).Value = actor.LastName;
+                    cmd.Parameters.Add("@Born", SqlDbType.VarChar, 10).Value = actor.Born;
 
                     conn.Open();
 

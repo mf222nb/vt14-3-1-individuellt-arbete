@@ -12,7 +12,7 @@ namespace Projekt.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         // The return type can be changed to IEnumerable, however to support
@@ -23,45 +23,78 @@ namespace Projekt.Pages
         //     string sortByExpression
         public IEnumerable<Actor> ActorListView_GetData()
         {
-            return Service.GetActors();
+            try
+            {
+                return Service.GetActors();
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Skådespelarna hämtades inte"));
+                return null;
+            }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void ActorListView_UpdateItem(int ActorID)
         {
-            var actor = Service.GetActor(ActorID);
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (actor == null)
+            try
             {
-                // The item wasn't found
-                ModelState.AddModelError(String.Empty, String.Format("skådespelaren med ID {0} hämtades inte", ActorID));
-                return;
+                var actor = Service.GetActor(ActorID);
+                // Load the item here, e.g. item = MyDataLayer.Find(id);
+                if (actor == null)
+                {
+                    // The item wasn't found
+                    ModelState.AddModelError(String.Empty, String.Format("Skådespelaren med ID {0} hämtades inte", ActorID));
+                    return;
+                }
+                TryUpdateModel(actor);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here, e.g. MyDataLayer.SaveChanges();
+                    Service.SaveActor(actor);
+                    this.SetTempData("SuccessMessage", "Skådespelaren uppdaterades");
+                    Response.RedirectToRoute("Actors");
+                }
             }
-            TryUpdateModel(actor);
-            if (ModelState.IsValid)
+            catch
             {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
-                Service.SaveActor(actor);
-                Response.RedirectToRoute("Actors");
+                ModelState.AddModelError(String.Empty, String.Format("Skådespelaren med ID {0} hämtades inte", ActorID));
             }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void ActorListView_DeleteItem(int ActorID)
         {
-            Service.DeleteActor(ActorID);
+            try
+            {
+                Service.DeleteActor(ActorID);
+                this.SetTempData("SuccessMessage", "Skådespelaren togs bort");
+                Response.RedirectToRoute("Actors");
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Skådespelaren med ID {0} gick inte att ta bort", ActorID));
+            }
         }
 
         //Insert actor
         public void ActorListView_InsertItem()
         {
-            var actor = new Actor();
-            TryUpdateModel(actor);
-            if (ModelState.IsValid)
+            try
             {
-                // Save changes here
-                Service.SaveActor(actor);
-                Response.RedirectToRoute("Actors");
+                var actor = new Actor();
+                TryUpdateModel(actor);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here
+                    Service.SaveActor(actor);
+                    this.SetTempData("SuccessMessage", "Skådespelaren lades till");
+                    Response.RedirectToRoute("Actors");
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Skådespelaren lades inte till"));
             }
         }
     }

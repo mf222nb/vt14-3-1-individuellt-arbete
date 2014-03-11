@@ -21,32 +21,58 @@ namespace Projekt.Pages
         // or be decorated with a value provider attribute, e.g. [QueryString]int id
         public Movie MovieFormView_GetItem([RouteData]int id)
         {
-            MovieID = id;
-            return Service.GetMovie(id);
+            try
+            {
+                MovieID = id;
+                return Service.GetMovie(id);
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Det gick inte att hämta filmerna"));
+                return null;
+            }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void MovieFormView_DeleteItem([RouteData]int id)
         {
-            Service.DeleteMovie(id);
+            try
+            {
+                Service.DeleteMovie(id);
+                this.SetTempData("SuccessMessage", "Filmen har tagits bort");
+                Response.RedirectToRoute("Movies");
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Det gick inte att ta bort filmen"));
+            }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void MovieFormView_UpdateItem([RouteData]int id)
         {
-            var movie = Service.GetMovie(id);
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (movie == null)
+            try
             {
-                // The item wasn't found
-                ModelState.AddModelError("", String.Format("Ett fel inträffade när filmen med ID {0} skulle hämtas", id));
-                return;
+                var movie = Service.GetMovie(id);
+                // Load the item here, e.g. item = MyDataLayer.Find(id);
+                if (movie == null)
+                {
+                    // The item wasn't found
+                    ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när filmen med ID {0} skulle hämtas", id));
+                    return;
+                }
+                TryUpdateModel(movie);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here, e.g. MyDataLayer.SaveChanges();
+                    Service.SaveMovie(movie);
+                    this.SetTempData("SuccessMessage", "Filmen uppdaterades");
+                    Response.RedirectToRoute("Movies");
+                }
             }
-            TryUpdateModel(movie);
-            if (ModelState.IsValid)
+            catch
             {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
-                Service.SaveMovie(movie);
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när filmen med ID {0} skulle hämtas", id));
             }
         }
 
@@ -58,48 +84,91 @@ namespace Projekt.Pages
         //     string sortByExpression
         public IEnumerable<Starring> ActorListView_GetData([RouteData]int id)
         {
-            return Service.GetMovieCharacters(id);
+            try
+            {
+                return Service.GetMovieCharacters(id);
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollerna med ID {0} skulle hämtas", id));
+                return null;
+            }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void ActorListView_UpdateItem(int StarringID)
         {
-            var character = Service.GetCharacter(StarringID);
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (character == null)
+            try
             {
-                // The item wasn't found
-                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle hämtas", StarringID));
-                return;
+                var character = Service.GetCharacter(StarringID);
+                // Load the item here, e.g. item = MyDataLayer.Find(id);
+                if (character == null)
+                {
+                    // The item wasn't found
+                    ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle hämtas", StarringID));
+                    return;
+                }
+                TryUpdateModel(character);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here, e.g. MyDataLayer.SaveChanges();
+                    Service.SaveStarring(character);
+                    this.SetTempData("SuccessMessage", "Rollen uppdaterades");
+                    Response.RedirectToRoute("MovieDetails");
+                }
             }
-            TryUpdateModel(character);
-            if (ModelState.IsValid)
+            catch
             {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
-                Service.SaveStarring(character);
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle hämtas", StarringID));
             }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
         public void ActorListView_DeleteItem(int StarringID)
         {
-            Service.DeleteStarring(StarringID);
+            try
+            {
+                Service.DeleteStarring(StarringID);
+                this.SetTempData("SuccessMessage", "Rollen togs bort");
+                Response.RedirectToRoute("MovieDetails");
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle tas bort", StarringID));
+            }
         }
 
         public IEnumerable<Actor> ActorDropDownList_GetData()
         {
-            return Service.GetActors();
+            try
+            {
+                return Service.GetActors();
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Det gick inte att hämta skådespelarna"));
+                return null;
+            }
         }
 
         public void ActorListView_InsertItem()
         {
-            var item = new Starring();
-            TryUpdateModel(item);
-            if (ModelState.IsValid)
+            try
             {
-                // Save changes here
-                item.MovieID = MovieID;
-                Service.SaveStarring(item);
+                var item = new Starring();
+                TryUpdateModel(item);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here
+                    item.MovieID = MovieID;
+                    Service.SaveStarring(item);
+                    this.SetTempData("SuccessMessage", "Rollen lades till");
+                    Response.RedirectToRoute("MovieDetails");
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen skulle läggas till"));
             }
         }
     }

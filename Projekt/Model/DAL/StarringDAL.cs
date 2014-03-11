@@ -44,7 +44,7 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = starring.MovieID;
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = starring.ActorID;
-                    cmd.Parameters.Add("@Character", SqlDbType.NVarChar, 40).Value = starring.Character;
+                    cmd.Parameters.Add("@Character", SqlDbType.VarChar, 40).Value = starring.Character;
 
                     cmd.Parameters.Add("@StarringID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
@@ -73,7 +73,7 @@ namespace Projekt.Model.DAL
                     var cmd = new SqlCommand("appSchema.usp_ListStarring", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@MovieID", movieID);
+                    cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = movieID;
 
                     conn.Open();
 
@@ -118,7 +118,7 @@ namespace Projekt.Model.DAL
                     var cmd = new SqlCommand("appSchema.usp_ListOneCharacter", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@StarringID", starringId);
+                    cmd.Parameters.Add("@StarringID", SqlDbType.Int, 4).Value = starringId;
 
                     conn.Open();
 
@@ -161,7 +161,7 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@StarringID", SqlDbType.Int, 4).Value = starring.StarringID;
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Value = starring.ActorID;
-                    cmd.Parameters.Add("@Character", SqlDbType.NVarChar, 40).Value = starring.Character;
+                    cmd.Parameters.Add("@Character", SqlDbType.VarChar, 40).Value = starring.Character;
 
                     conn.Open();
 

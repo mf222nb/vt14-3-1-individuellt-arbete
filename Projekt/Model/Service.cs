@@ -1,6 +1,7 @@
 ﻿using Projekt.Model.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -51,6 +52,13 @@ namespace Projekt.Model
 
         public static void SaveMovie(Movie movie)
         {
+            ICollection<ValidationResult> validationresults;
+            if (!movie.Validate(out validationresults))
+            {
+                var ex = new ValidationException("Objektet kunde inte valideras");
+                ex.Data.Add("ValidationResults", validationresults);
+                throw ex;
+            }
             if (movie.MovieID == 0)
             {
                 MovieDAL.InsertMovie(movie);
@@ -84,6 +92,13 @@ namespace Projekt.Model
 
         public static void SaveActor(Actor actor)
         {
+            ICollection<ValidationResult> validationresults;
+            if (!actor.Validate(out validationresults))
+            {
+                var ex = new ValidationException("Objektet kunde inte valideras");
+                ex.Data.Add("ValidationResults", validationresults);
+                throw ex;
+            }
             if (actor.ActorID == 0)
             {
                 ActorDAL.InsertActor(actor);
@@ -97,6 +112,13 @@ namespace Projekt.Model
         //Metoder som har med medverkan att göra
         public static void SaveStarring(Starring starring)
         {
+            ICollection<ValidationResult> validationresults;
+            if (!starring.Validate(out validationresults))
+            {
+                var ex = new ValidationException("Objektet kunde inte valideras");
+                ex.Data.Add("ValidationResults", validationresults);
+                throw ex;
+            }
             if (starring.StarringID == 0)
             {
                 StarringDAL.InsertStarring(starring);

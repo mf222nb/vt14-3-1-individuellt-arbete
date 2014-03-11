@@ -42,7 +42,7 @@ namespace Projekt.Model.DAL
                     var cmd = new SqlCommand("appSchema.usp_ListOneMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@MovieID", movieID);
+                    cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = movieID;
 
                     conn.Open();
 
@@ -124,7 +124,7 @@ namespace Projekt.Model.DAL
                     SqlCommand cmd = new SqlCommand("appSchema.usp_InsertMovie", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@Titel", SqlDbType.NVarChar, 50).Value = movie.Titel;
+                    cmd.Parameters.Add("@Titel", SqlDbType.VarChar, 50).Value = movie.Titel;
                     cmd.Parameters.Add("@Length", SqlDbType.TinyInt).Value = movie.Length;
 
                     cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
@@ -154,7 +154,7 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@MovieID", SqlDbType.Int, 4).Value = movie.MovieID;
 
-                    cmd.Parameters.Add("@Titel", SqlDbType.NVarChar, 50).Value = movie.Titel;
+                    cmd.Parameters.Add("@Titel", SqlDbType.VarChar, 50).Value = movie.Titel;
                     cmd.Parameters.Add("@Length", SqlDbType.TinyInt).Value = movie.Length;
 
                     conn.Open();

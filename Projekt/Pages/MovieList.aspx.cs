@@ -23,7 +23,15 @@ namespace Projekt.Pages
         //     string sortByExpression
         public IEnumerable<Movie> MovieListView_GetData()
         {
-            return Service.GetMovies();
+            try
+            {
+                return Service.GetMovies();
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Filmerna hämtades inte"));
+                return null;
+            }
         }
     }
 }

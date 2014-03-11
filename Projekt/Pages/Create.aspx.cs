@@ -17,13 +17,21 @@ namespace Projekt.Pages
 
         public void CreateFormView_InsertItem()
         {
-            var item = new Movie();
-            TryUpdateModel(item);
-            if (ModelState.IsValid)
+            try
             {
-                // Save changes here
-                Service.SaveMovie(item);
-                Response.RedirectToRoute("MovieDetails", new { id = item.MovieID });
+                var item = new Movie();
+                TryUpdateModel(item);
+                if (ModelState.IsValid)
+                {
+                    // Save changes here
+                    Service.SaveMovie(item);
+                    this.SetTempData("SucessMessage", "Filmen lades till");
+                    Response.RedirectToRoute("MovieDetails", new { id = item.MovieID });
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError(String.Empty, String.Format("Filmen lades inte till"));
             }
             
         }
