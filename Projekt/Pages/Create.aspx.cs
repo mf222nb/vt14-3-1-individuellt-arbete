@@ -25,7 +25,7 @@ namespace Projekt.Pages
                 {
                     // Save changes here
                     Service.SaveMovie(item);
-                    this.SetTempData("SucessMessage", "Filmen lades till");
+                    this.SetTempData("SuccessMessage", "Filmen lades till");
                     Response.RedirectToRoute("MovieDetails", new { id = item.MovieID });
                 }
             }

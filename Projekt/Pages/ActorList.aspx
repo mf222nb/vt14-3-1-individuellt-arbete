@@ -2,8 +2,8 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="Edit" />
-    <asp:ValidationSummary ID="ValidationSummary2" runat="server" />
+    <asp:ValidationSummary ID="ValidationSummary1" CssClass="error" runat="server" ValidationGroup="Edit" />
+    <asp:ValidationSummary ID="ValidationSummary2" CssClass="error" runat="server" />
 
     <h2>
         Skådespelare
@@ -37,8 +37,8 @@
                     <%# Item.Born %>
                 </td>
                 <td>
-                    <asp:LinkButton ID="DeleteLinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort skådespelaren')"></asp:LinkButton>
-                    <asp:LinkButton ID="EditLinkButton" runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"></asp:LinkButton>
+                    <asp:LinkButton ID="DeleteLinkButton" CssClass="LinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort skådespelaren')"></asp:LinkButton>
+                    <asp:LinkButton ID="EditLinkButton" CssClass="LinkButton" runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"></asp:LinkButton>
                 </td>
             </tr>
         </ItemTemplate>
@@ -50,22 +50,23 @@
         <InsertItemTemplate>
             <tr>
                 <td>
-                    <asp:TextBox ID="FirstName" runat="server" Text='<%# BindItem.FirstName %>' MaxLength="20" />
+                    <asp:TextBox ID="FirstName" runat="server" Text='<%# BindItem.FirstName %>' MaxLength="20" Columns="20" />
                 </td>
                 <td>
-                    <asp:TextBox ID="LastName" runat="server" Text='<%# BindItem.LastName %>' MaxLength="25" />
+                    <asp:TextBox ID="LastName" runat="server" Text='<%# BindItem.LastName %>' MaxLength="25" Columns="25" />
                 </td>
                 <td>
-                    <asp:TextBox ID="Born" runat="server" Text='<%# BindItem.Born %>' MaxLength="10" />
+                    <asp:TextBox ID="Born" runat="server" Text='<%# BindItem.Born %>' MaxLength="10" Columns="10" />
                 </td>
                 <td>
-                    <asp:LinkButton ID="InsertLinkButton" runat="server" CommandName="Insert" Text="Lägg till"></asp:LinkButton>
-                    <asp:LinkButton ID="CancelLinkButton" runat="server" CommandName="Cancel" Text="Rensa"></asp:LinkButton>
+                    <asp:LinkButton ID="InsertLinkButton" CssClass="LinkButton" runat="server" CommandName="Insert" Text="Lägg till"></asp:LinkButton>
+                    <asp:LinkButton ID="CancelLinkButton" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Rensa"></asp:LinkButton>
                 </td>
             </tr>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett förnamn måste fyllas i" ControlToValidate="FirstName" Display="None" Text="*"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett efternamn måste fyllas i" ControlToValidate="LastName" Display="None" Text="*"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett födelsedatum måste fyllas i" ControlToValidate="Born" Display="None" Text="*"></asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator runat="server" ErrorMessage="Ett korrekt födelsedatum måste anges" ValidationExpression="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" Display="None" Text="*" ControlToValidate="Born"></asp:RegularExpressionValidator>
         </InsertItemTemplate>
         <EditItemTemplate>
             <tr>
@@ -79,13 +80,14 @@
                     <asp:TextBox ID="Born" runat="server" Text='<%# BindItem.Born %>' ValidationGroup="Edit" />
                 </td>
                 <td>
-                    <asp:LinkButton ID="UpdateLinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>
-                    <asp:LinkButton ID="CancelLinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
+                    <asp:LinkButton ID="UpdateLinkButton" CssClass="LinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>
+                    <asp:LinkButton ID="CancelLinkButton" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
                 </td>
             </tr>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett förnamn måste fyllas i" ControlToValidate="FirstName" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett efternamn måste fyllas i" ControlToValidate="LastName" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett födelsedatum måste fyllas i" ControlToValidate="Born" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
+             <asp:RegularExpressionValidator runat="server" ErrorMessage="Ett korrekt födelsedatum måste anges" ControlToValidate="Born" ValidationGroup="Edit" ValidationExpression="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" Display="None" Text="*"></asp:RegularExpressionValidator>
         </EditItemTemplate>
     </asp:ListView>
 </asp:Content>

@@ -10,7 +10,7 @@
                 <tr>
                     <th>Titel
                     </th>
-                    <th>Längd i min
+                    <th class="small">Längd i min
                     </th>
                 </tr>
                 <asp:PlaceHolder ID="itemPlaceHolder" runat="server"></asp:PlaceHolder>
@@ -18,7 +18,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <tr>
-                <td>
+                <td class="tableWidth">
                     <asp:HyperLink runat="server" NavigateUrl='<%# GetRouteUrl("MovieDetails", new { id = Item.MovieID})%>' Text='<%# Item.Titel %>'></asp:HyperLink>
                 </td>
                 <td>
