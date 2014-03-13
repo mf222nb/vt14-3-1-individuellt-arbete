@@ -34,7 +34,7 @@
                     <%# Item.LastName %>
                 </td>
                 <td>
-                    <%# Item.Born %>
+                    <%# Item.Born.ToString("yyyy-MM-dd") %>
                 </td>
                 <td>
                     <asp:LinkButton ID="DeleteLinkButton" CssClass="LinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort skådespelaren')"></asp:LinkButton>
@@ -77,7 +77,7 @@
                     <asp:TextBox ID="LastName" runat="server" Text='<%# BindItem.LastName %>' ValidationGroup="Edit" />
                 </td>
                 <td>
-                    <asp:TextBox ID="Born" runat="server" Text='<%# BindItem.Born %>' ValidationGroup="Edit" />
+                    <asp:TextBox ID="Born" runat="server" Text='<%# Bind("Born", "{0:yyyy-MM-dd}") %>' ValidationGroup="Edit" />
                 </td>
                 <td>
                     <asp:LinkButton ID="UpdateLinkButton" CssClass="LinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>

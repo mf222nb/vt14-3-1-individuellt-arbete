@@ -138,6 +138,7 @@ namespace Projekt.Pages
             }
         }
 
+        //Anropar metod för att hämta ut en lista med alla skådespelare och presentera dem i en droopdown lista
         public IEnumerable<Actor> ActorDropDownList_GetData()
         {
             try
@@ -151,6 +152,7 @@ namespace Projekt.Pages
             }
         }
 
+        //Anropar en metod för att lägga till en ny roll
         public void ActorListView_InsertItem()
         {
             try

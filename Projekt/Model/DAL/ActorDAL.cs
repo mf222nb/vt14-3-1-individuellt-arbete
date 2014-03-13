@@ -60,7 +60,7 @@ namespace Projekt.Model.DAL
                                 ActorID = reader.GetInt32(actorIdIndex),
                                 FirstName = reader.GetString(firstNameIndex),
                                 LastName = reader.GetString(lastNameIndex),
-                                Born = reader.GetString(bornIndex)
+                                Born = reader.GetDateTime(bornIndex)
                             });
                         }
                     }
@@ -104,7 +104,7 @@ namespace Projekt.Model.DAL
                                 ActorID = reader.GetInt32(actorIdIndex),
                                 FirstName = reader.GetString(firstNameIndex),
                                 LastName = reader.GetString(lastNameIndex),
-                                Born = reader.GetString(bornIndex)
+                                Born = reader.GetDateTime(bornIndex)
                             };
                         }
                     }
@@ -129,7 +129,7 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 20).Value = actor.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 25).Value = actor.LastName;
-                    cmd.Parameters.Add("@Born", SqlDbType.VarChar, 10).Value = actor.Born;
+                    cmd.Parameters.Add("@Born", SqlDbType.Date).Value = actor.Born;
 
                     cmd.Parameters.Add("@ActorID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
@@ -160,7 +160,7 @@ namespace Projekt.Model.DAL
 
                     cmd.Parameters.Add("@FirstName", SqlDbType.VarChar, 20).Value = actor.FirstName;
                     cmd.Parameters.Add("@LastName", SqlDbType.VarChar, 25).Value = actor.LastName;
-                    cmd.Parameters.Add("@Born", SqlDbType.VarChar, 10).Value = actor.Born;
+                    cmd.Parameters.Add("@Born", SqlDbType.Date).Value = actor.Born;
 
                     conn.Open();
 

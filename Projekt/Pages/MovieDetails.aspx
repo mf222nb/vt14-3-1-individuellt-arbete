@@ -81,8 +81,8 @@
                             </asp:DropDownList>
                         </td>
                         <td>
-                            <asp:LinkButton ID="LinkButton1" CssClass="LinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>
-                            <asp:LinkButton ID="LinkButton2" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
+                            <asp:LinkButton CssClass="LinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>
+                            <asp:LinkButton CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
                         </td>
                     </tr>
                 <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett rollnamn måste fyllas i" ControlToValidate="Character" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
