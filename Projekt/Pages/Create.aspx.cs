@@ -15,6 +15,7 @@ namespace Projekt.Pages
 
         }
 
+        //Lägger till en film i databasen och visar ett meddelande när det är gjort, om något går fel visas ett meddelande
         public void CreateFormView_InsertItem()
         {
             try
@@ -23,7 +24,6 @@ namespace Projekt.Pages
                 TryUpdateModel(item);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here
                     Service.SaveMovie(item);
                     this.SetTempData("SuccessMessage", "Filmen lades till");
                     Response.RedirectToRoute("MovieDetails", new { id = item.MovieID });

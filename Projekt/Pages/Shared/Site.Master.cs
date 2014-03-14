@@ -11,6 +11,7 @@ namespace Projekt.Pages.Shared
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Rättmeddelande visas om det inte finns något redan annars visas inget
             SuccessLabel.Text = this.GetTempData("SuccessMessage") as String;
             SuccessPanel.Visible = !String.IsNullOrWhiteSpace(SuccessLabel.Text);
         }

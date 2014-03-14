@@ -2,13 +2,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:ValidationSummary ID="ValidationSummary1" CssClass="error" runat="server" ValidationGroup="Edit" />
-    <asp:ValidationSummary ID="ValidationSummary2" CssClass="error" runat="server" />
+    <asp:ValidationSummary CssClass="error" runat="server" ValidationGroup="Edit" ShowModelStateErrors="false"/>
+    <asp:ValidationSummary CssClass="error" runat="server" />
 
     <h2>
         Skådespelare
     </h2>
-    <%-- Listview för att visa alla skådespelare som finns i databasen --%>
     <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.Actor" SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" DeleteMethod="ActorListView_DeleteItem"
         InsertMethod="ActorListView_InsertItem" InsertItemPosition="FirstItem"
         DataKeyNames="ActorID">
@@ -25,6 +24,7 @@
                 <asp:PlaceHolder ID="itemPlaceHolder" runat="server"></asp:PlaceHolder>
             </table>
         </LayoutTemplate>
+        <%-- De skådespelare som finns i databasen listas här --%>
         <ItemTemplate>
             <tr>
                 <td>
@@ -42,6 +42,7 @@
                 </td>
             </tr>
         </ItemTemplate>
+        <%-- Om det inte finns några skådespelare så visas detta --%>
         <EmptyDataTemplate>
             <p>
                 Skådespelare saknas
@@ -63,6 +64,7 @@
                     <asp:LinkButton ID="CancelLinkButton" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Rensa"></asp:LinkButton>
                 </td>
             </tr>
+            <%-- Validering så att man inte kan skicka tomma fält och så att man måste ange ett korrekt datum för att spara --%>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett förnamn måste fyllas i" ControlToValidate="FirstName" Display="None" Text="*"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett efternamn måste fyllas i" ControlToValidate="LastName" Display="None" Text="*"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett födelsedatum måste fyllas i" ControlToValidate="Born" Display="None" Text="*"></asp:RequiredFieldValidator>
@@ -84,10 +86,18 @@
                     <asp:LinkButton ID="CancelLinkButton" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
                 </td>
             </tr>
+            <<%-- Validering så att man inte kan skicka tomma fält och så att man måste ange ett korrekt datum för att spara --%>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett förnamn måste fyllas i" ControlToValidate="FirstName" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett efternamn måste fyllas i" ControlToValidate="LastName" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett födelsedatum måste fyllas i" ControlToValidate="Born" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
              <asp:RegularExpressionValidator runat="server" ErrorMessage="Ett korrekt födelsedatum måste anges" ControlToValidate="Born" ValidationGroup="Edit" ValidationExpression="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$" Display="None" Text="*"></asp:RegularExpressionValidator>
         </EditItemTemplate>
     </asp:ListView>
+    <asp:DataPager ID="DataPager1" runat="server" PageSize="5" PagedControlID="ActorListView">
+            <Fields>
+                <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="False" ShowFirstPageButton="True" />
+                <asp:NumericPagerField ButtonType="Link" ButtonCount="10" />
+                <asp:NextPreviousPagerField ButtonType="Link" ShowPreviousPageButton="False" ShowLastPageButton="True" />
+            </Fields>
+        </asp:DataPager>
 </asp:Content>

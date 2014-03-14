@@ -21,6 +21,8 @@ namespace Projekt.Pages
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+
+        //Listar alla filmer som finns i databasen och presenterar dem och om något går fel så visas ett felmeddelande
         public IEnumerable<Movie> MovieListView_GetData()
         {
             try

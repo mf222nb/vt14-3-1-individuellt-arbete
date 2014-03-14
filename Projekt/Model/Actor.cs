@@ -8,6 +8,7 @@ namespace Projekt.Model
 {
     public class Actor
     {
+        //Egenskaper som är lika som de tabeller är i databasen
         public int ActorID { get; set; }
         [Required(ErrorMessage = "Ett förnamn måste anges")]
         [StringLength(20, ErrorMessage = "Förnamnet kan bara bestå av 20 tecken som max")]

@@ -21,36 +21,37 @@ namespace Projekt.Pages
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
-        public IEnumerable<Actor> ActorListView_GetData()
+
+        //Hämtar alla skådespelare som finns i databasen och presenterar dem
+        public IEnumerable<Actor> ActorListView_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             try
             {
-                return Service.GetActors();
+                return Service.GetActorsPageWise(maximumRows, startRowIndex, out totalRowCount);
             }
             catch
             {
                 ModelState.AddModelError(String.Empty, String.Format("Skådespelarna hämtades inte"));
+                totalRowCount = 0;
                 return null;
             }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Uppdaterar en skådespelare genom att hämta skådespelaren och sedan ändra den
         public void ActorListView_UpdateItem(int ActorID)
         {
             try
             {
                 var actor = Service.GetActor(ActorID);
-                // Load the item here, e.g. item = MyDataLayer.Find(id);
                 if (actor == null)
                 {
-                    // The item wasn't found
                     ModelState.AddModelError(String.Empty, String.Format("Skådespelaren med ID {0} hämtades inte", ActorID));
                     return;
                 }
                 TryUpdateModel(actor);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here, e.g. MyDataLayer.SaveChanges();
                     Service.SaveActor(actor);
                     this.SetTempData("SuccessMessage", "Skådespelaren uppdaterades");
                     Response.RedirectToRoute("Actors");
@@ -63,6 +64,7 @@ namespace Projekt.Pages
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Tar bort en skådespelare och visar ett meddelande att den har tagits bort
         public void ActorListView_DeleteItem(int ActorID)
         {
             try
@@ -77,7 +79,7 @@ namespace Projekt.Pages
             }
         }
 
-        //Insert actor
+        //Lägga till skådespelare i databasen och om något går fel så kommer ett felmeddelande, när skådespelaren har sparats så visas ett rättmeddelande
         public void ActorListView_InsertItem()
         {
             try
@@ -86,7 +88,6 @@ namespace Projekt.Pages
                 TryUpdateModel(actor);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here
                     Service.SaveActor(actor);
                     this.SetTempData("SuccessMessage", "Skådespelaren lades till");
                     Response.RedirectToRoute("Actors");

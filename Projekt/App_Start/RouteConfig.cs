@@ -8,6 +8,7 @@ namespace Projekt
 {
     public class RouteConfig
     {
+        //Ändrar addressfältet så att det står vad det är man går till till exempel filmer istället för Pages/MovieList.aspx
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("Movies", "filmer", "~/Pages/MovieList.aspx");

@@ -14,6 +14,7 @@
         <div>
             <h1>Filmer</h1>
         </div>
+        <%-- Navigation som tar en till andra webbformulär --%>
         <nav>
             <ul>
                 <li>

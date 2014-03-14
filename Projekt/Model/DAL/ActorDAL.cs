@@ -9,7 +9,7 @@ namespace Projekt.Model.DAL
 {
     public class ActorDAL : DALBase
     {
-        //Tar bort en skådespelare
+        //Tar bort en skådespelare genom att anropa en lagrad procedur som tittar på id:t och tar bort skådespelaren på endast det id
         public void DeleteActor(int actorID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -32,7 +32,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut alla skådespelare från databasen
+        //Hämtar ut alla skådespelare från databasen och all data 
         public IEnumerable<Actor> GetActors()
         {
             using (var conn = CreateConnection())
@@ -76,7 +76,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar en skådespelare med ett visst ID
+        //Hämtar en skådespelare med ett visst ID genom att anropa en procedur som hämtar ut all data kopplat till den skådespelaren
         public Actor GetActorById(int actorId)
         {
             using (var conn = CreateConnection())
@@ -117,7 +117,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Lägger till en skådespelare
+        //Lägger till en skådespelare genom att anropa en lagrad procedur som skapar ett id och lägger till det användaren har skrivit in
         public void InsertActor(Actor actor)
         {
             using (SqlConnection conn = CreateConnection())
@@ -146,7 +146,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Uppdaterar en befintlig skådespelare
+        //Uppdatera en skådespelare genom att anropa en procedur som hämtar id och uppdaterar det som som användaren har skrivit in på det id som är hämtat
         public void UpdateActor(Actor actor)
         {
             using (SqlConnection conn = CreateConnection())
@@ -169,6 +169,58 @@ namespace Projekt.Model.DAL
                 catch
                 {
                     throw new ApplicationException("An error occured while updating a actor in the database.");
+                }
+            }
+        }
+
+        //Hämtar ut alla skådespelare från databasen och all data 
+        public IEnumerable<Actor> GetActorsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var actors = new List<Actor>(50);
+
+                    var cmd = new SqlCommand("appSchema.usp_ListActorsPageWise", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@Start", SqlDbType.Int, 4).Value = startRowIndex;
+                    cmd.Parameters.Add("@Rows", SqlDbType.Int, 4).Value = maximumRows;
+
+                    cmd.Parameters.Add("@Total", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var actorIdIndex = reader.GetOrdinal("ActorID");
+                        var firstNameIndex = reader.GetOrdinal("Firstname");
+                        var lastNameIndex = reader.GetOrdinal("Lastname");
+                        var bornIndex = reader.GetOrdinal("Born");
+
+                        while (reader.Read())
+                        {
+                            actors.Add(new Actor
+                            {
+                                ActorID = reader.GetInt32(actorIdIndex),
+                                FirstName = reader.GetString(firstNameIndex),
+                                LastName = reader.GetString(lastNameIndex),
+                                Born = reader.GetDateTime(bornIndex)
+                            });
+                        }
+                    }
+                    totalRowCount = (int)cmd.Parameters["@Total"].Value;
+                    
+                    actors.TrimExcess();
+
+
+                    return actors;
+                }
+                catch
+                {
+                    throw new ApplicationException("An error occured while getting actors from the database.");
                 }
             }
         }

@@ -18,6 +18,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <tr>
+                <%-- Tar dig till den filmen som du trycker på --%>
                 <td class="tableWidth">
                     <asp:HyperLink runat="server" NavigateUrl='<%# GetRouteUrl("MovieDetails", new { id = Item.MovieID})%>' Text='<%# Item.Titel %>'></asp:HyperLink>
                 </td>
@@ -26,6 +27,7 @@
                 </td>
             </tr>
         </ItemTemplate>
+        <%-- Om filmer saknas så visas detta --%>
         <EmptyDataTemplate>
             <p>
                 Filmer saknas

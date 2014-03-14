@@ -5,7 +5,7 @@
 
     <%-- Alla felmeddelanden och rättmeddelanden visas här --%>
     <asp:ValidationSummary CssClass="error" runat="server" />
-    <asp:ValidationSummary CssClass="error" runat="server" ValidationGroup="Edit" />
+    <asp:ValidationSummary CssClass="error" runat="server" ValidationGroup="Edit" ShowModelStateErrors="false"/>
 
     <asp:FormView ID="MovieFormView" runat="server" ItemType="Projekt.Model.Movie" DataKeyNames="MovieID"
         DefaultMode="ReadOnly" RenderOuterTable="false" SelectMethod="MovieFormView_GetItem" DeleteMethod="MovieFormView_DeleteItem"
@@ -24,14 +24,15 @@
             <div class="text">
                 <%# Item.Length %>
             </div>
+            <%-- Knappar för att ta bort och redigera --%>
             <div class="buttons">
                 <asp:LinkButton ID="DeleteLinkButton" CssClass="LinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort filmen')"></asp:LinkButton>
                 <asp:LinkButton ID="EditLinkButton" CssClass="LinkButton" runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"></asp:LinkButton>
             </div>
-
-            <%--Listar rollerna som tillhör filmen --%>
+            
             <asp:ListView ID="ActorListView" runat="server" ItemType="Projekt.Model.StarringActor" DataKeyNames="StarringID, MovieID, ActorID"
                 SelectMethod="ActorListView_GetData" UpdateMethod="ActorListView_UpdateItem" InsertMethod="ActorListView_InsertItem" DeleteMethod="ActorListView_DeleteItem" InsertItemPosition="LastItem">
+                <%--Listar rollerna som tillhör en specifik film --%>
                 <LayoutTemplate>
                     <h2>Roller
                     </h2>
@@ -76,6 +77,7 @@
                             <asp:TextBox ID="Character" runat="server" Text='<%# BindItem.Character %>' ValidationGroup="Edit" Columns="40" MaxLength="40" />
                         </td>
                         <td>
+                            <%-- Droopdown lista för att visa alla skådespelare som finns i databasen --%>
                             <asp:DropDownList ID="ActorDropDownList" runat="server" ItemType="Projekt.Model.Actor" DataTextField="Name"
                                 DataValueField="ActorID" SelectMethod="ActorDropDownList_GetData" SelectedValue='<%# BindItem.ActorID %>'>
                             </asp:DropDownList>
@@ -85,6 +87,7 @@
                             <asp:LinkButton CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
                         </td>
                     </tr>
+                <%-- Validering så att man inte kan skicka in en tom roll --%>
                 <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett rollnamn måste fyllas i" ControlToValidate="Character" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
                 </EditItemTemplate>
                 <InsertItemTemplate>
@@ -93,6 +96,7 @@
                             <asp:TextBox ID="Character" runat="server" Text='<%# BindItem.Character %>' MaxLength="40" Columns="40"></asp:TextBox>
                         </td>
                         <td>
+                            <%-- Droopdown lista för att visa alla skådespelare som finns i databasen --%>
                             <asp:DropDownList ID="ActorDropDownList" runat="server" ItemType="Projekt.Model.Actor" DataTextField="Name"
                                 DataValueField="ActorID" SelectMethod="ActorDropDownList_GetData" SelectedValue='<%# BindItem.ActorID %>'>
                             </asp:DropDownList>
@@ -102,6 +106,7 @@
                             <asp:LinkButton ID="CancelLinkButton" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Rensa"></asp:LinkButton>
                         </td>
                     </tr>
+                    <%-- Validering --%>
                     <asp:RequiredFieldValidator runat="server" ErrorMessage="Ett rollnamn måste fyllas i" ControlToValidate="Character" Display="None" Text="*"></asp:RequiredFieldValidator>
                 </InsertItemTemplate>
             </asp:ListView>
@@ -124,6 +129,7 @@
                 <asp:LinkButton ID="LinkButton1" CssClass="LinkButton" runat="server" CommandName="Update" Text="Spara" ValidationGroup="Edit"></asp:LinkButton>
                 <asp:LinkButton ID="LinkButton2" CssClass="LinkButton" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false"></asp:LinkButton>
             </div>
+            <%-- Validering så att man inte kan skicka in tomma fält --%>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="En titel måste fyllas i" ControlToValidate="Titel" Display="None" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
             <asp:RequiredFieldValidator runat="server" ErrorMessage="En längd måste anges" Display="None" ControlToValidate="Length" Text="*" ValidationGroup="Edit"></asp:RequiredFieldValidator>
         </EditItemTemplate>

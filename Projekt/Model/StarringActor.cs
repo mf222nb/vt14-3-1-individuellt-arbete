@@ -7,6 +7,7 @@ namespace Projekt.Model
 {
     public class StarringActor : Starring
     {
+        //Egenskap som lägger in hela skådespelarnamnet 
         public string ActorName { get; set; }
     }
 }

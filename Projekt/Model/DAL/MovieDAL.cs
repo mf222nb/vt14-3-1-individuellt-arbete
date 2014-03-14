@@ -9,7 +9,7 @@ namespace Projekt.Model.DAL
 {
     public class MovieDAL : DALBase
     {
-        //Raderar en film
+        //Tar bort en film genom att anropa en lagrad procedur som tittar på id:t och tar bort endast den filmen på det id
         public void DeleteMovie(int movieID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -32,7 +32,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut information om en specifik film
+        //Hämtar ut information om en specifik film genom att titta på id:t och hämtar ut all information som finns på det id
         public Movie GetMovieById(int movieID)
         {
             using (var conn = CreateConnection())
@@ -73,7 +73,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut alla filmer som finns i databasen
+        //Hämtar ut alla filmer som finns i databasen genom att anropa en procedur som hämtar all data som finns på alla id:n som finns
         public IEnumerable<Movie> GetMovies()
         {
             using (var conn = CreateConnection())
@@ -114,7 +114,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Lägger till en film
+        //Lägger till en film genom att anropa en lagrad procedur som skapar ett id och lägger till det användaren har skrivit in
         public void InsertMovie(Movie movie)
         {
             using (SqlConnection conn = CreateConnection())
@@ -142,7 +142,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Uppdaterar en film
+        //Uppdatera en film genom att anropa en procedur som hämtar id och uppdaterar det som som användaren har skrivit in på det id som är hämtat
         public void UpdateMovie(Movie movie)
         {
             using (SqlConnection conn = CreateConnection())

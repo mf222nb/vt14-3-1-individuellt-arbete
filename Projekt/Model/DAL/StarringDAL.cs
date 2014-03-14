@@ -9,7 +9,7 @@ namespace Projekt.Model.DAL
 {
     public class StarringDAL : DALBase
     {
-        //Tar bort en roll
+        //Tar bort en roll genom att anropa en lagrad procedur som tittar på id:t och tar bort den rollen på endast det id
         public void DeleteStarring(int starringID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -32,7 +32,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Lägger till en roll
+        //Lägger till en roll genom att anropa en lagrad procedur som skapar ett id och lägger till det användaren har skrivit in
         public void InsertStarring(Starring starring)
         {
             using (SqlConnection conn = CreateConnection())
@@ -108,7 +108,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Listar 1 roll
+        //Hämtar en roll genom att anropa en procedur som hämtar ett id och all annan information om den rollen
         public Starring GetCharacterById(int starringId)
         {
             using (var conn = CreateConnection())
@@ -149,7 +149,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Uppdatera en roll
+        //Uppdatera en roll genom att anropa en procedur som hämtar id och uppdaterar det som som användaren har skrivit in på det id som är hämtat
         public void UpdateCharacter(Starring starring)
         {
             using (SqlConnection conn = CreateConnection())

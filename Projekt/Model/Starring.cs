@@ -8,6 +8,7 @@ namespace Projekt.Model
 {
     public class Starring
     {
+        //Egenskaper som är lika som de tabeller är i databasen
         public int StarringID { get; set; }
         public int MovieID { get; set; }
         public int ActorID { get; set; }

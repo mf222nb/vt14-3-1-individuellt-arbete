@@ -19,6 +19,8 @@ namespace Projekt.Pages
 
         // The id parameter should match the DataKeyNames value set on the control
         // or be decorated with a value provider attribute, e.g. [QueryString]int id
+
+        //Hämtar ut en viss film på id:t och presenterar den, går något fel så visas ett meddelande
         public Movie MovieFormView_GetItem([RouteData]int id)
         {
             try
@@ -34,6 +36,7 @@ namespace Projekt.Pages
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Tar bort en film och visar ett meddelande att den har tagits bort
         public void MovieFormView_DeleteItem([RouteData]int id)
         {
             try
@@ -49,22 +52,20 @@ namespace Projekt.Pages
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Uppdaterar en film genom att hämta filmen och sedan ändra den och visar att en uppdatering har gjorts
         public void MovieFormView_UpdateItem([RouteData]int id)
         {
             try
             {
                 var movie = Service.GetMovie(id);
-                // Load the item here, e.g. item = MyDataLayer.Find(id);
                 if (movie == null)
                 {
-                    // The item wasn't found
                     ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när filmen med ID {0} skulle hämtas", id));
                     return;
                 }
                 TryUpdateModel(movie);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here, e.g. MyDataLayer.SaveChanges();
                     Service.SaveMovie(movie);
                     this.SetTempData("SuccessMessage", "Filmen uppdaterades");
                     Response.RedirectToRoute("Movies");
@@ -82,6 +83,8 @@ namespace Projekt.Pages
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
+
+        //Hämtar alla roller som finns på den filmen och presenterar dem
         public IEnumerable<Starring> ActorListView_GetData([RouteData]int id)
         {
             try
@@ -96,22 +99,20 @@ namespace Projekt.Pages
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Uppdaterar en roll genom att hämta rollen och sedan ändra den och visar att en uppdatering har gjorts
         public void ActorListView_UpdateItem(int StarringID)
         {
             try
             {
                 var character = Service.GetCharacter(StarringID);
-                // Load the item here, e.g. item = MyDataLayer.Find(id);
                 if (character == null)
                 {
-                    // The item wasn't found
                     ModelState.AddModelError(String.Empty, String.Format("Ett fel inträffade när rollen med ID {0} skulle hämtas", StarringID));
                     return;
                 }
                 TryUpdateModel(character);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here, e.g. MyDataLayer.SaveChanges();
                     Service.SaveStarring(character);
                     this.SetTempData("SuccessMessage", "Rollen uppdaterades");
                     Response.RedirectToRoute("MovieDetails");
@@ -124,6 +125,7 @@ namespace Projekt.Pages
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
+        //Tar bort en roll och visar ett meddelande att den har tagits bort, visar ett felmeddelande om något blir fel
         public void ActorListView_DeleteItem(int StarringID)
         {
             try
@@ -152,7 +154,7 @@ namespace Projekt.Pages
             }
         }
 
-        //Anropar en metod för att lägga till en ny roll
+        //Lägger till en roll i databasen och visar ett meddelande att det är gjort, om något går fel så visas ett felmeddelande
         public void ActorListView_InsertItem()
         {
             try
@@ -161,7 +163,6 @@ namespace Projekt.Pages
                 TryUpdateModel(item);
                 if (ModelState.IsValid)
                 {
-                    // Save changes here
                     item.MovieID = MovieID;
                     Service.SaveStarring(item);
                     this.SetTempData("SuccessMessage", "Rollen lades till");

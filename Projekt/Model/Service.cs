@@ -19,17 +19,18 @@ namespace Projekt.Model
             get { return _ActorDAL ?? (_ActorDAL = new ActorDAL()); }
         }
 
-        public static MovieDAL MovieDAL 
+        private static MovieDAL MovieDAL 
         {
             get { return _MovieDAL ?? (_MovieDAL = new MovieDAL()); } 
         }
 
-        public static StarringDAL StarringDAL 
+        private static StarringDAL StarringDAL 
         {
             get { return _StarringDAL ?? (_StarringDAL = new StarringDAL()); } 
         }
 
         //Alla metoder som har med filmer att göra
+        //Tar bort en specifik film
         public static void DeleteMovie(Movie movie)
         {
             DeleteMovie(movie.MovieID);
@@ -40,16 +41,19 @@ namespace Projekt.Model
             MovieDAL.DeleteMovie(movieId);
         }
 
+        //Hämtar ut en specifik film med ett specifikt id
         public static Movie GetMovie(int movieId)
         {
             return MovieDAL.GetMovieById(movieId);
         }
 
+        //Hämtar ut alla fiilmer ur databasen som en lista
         public static IEnumerable<Movie> GetMovies()
         {
             return MovieDAL.GetMovies();
         }
 
+        //Sparar en ny film om id:t inte finns annars om det finns så är det en uppdatering som användaren vill göra.
         public static void SaveMovie(Movie movie)
         {
             ICollection<ValidationResult> validationresults;
@@ -70,6 +74,7 @@ namespace Projekt.Model
         }
 
         //Alla metoder som har med skådespelare att göra
+        //Tar bort en specifik skådespelare
         public static void DeleteActor(Actor actor)
         {
             DeleteActor(actor.ActorID);
@@ -80,16 +85,24 @@ namespace Projekt.Model
             ActorDAL.DeleteActor(actorId);
         }
 
+        //Hämtar ut alla skådespelare från databasen som en lista
         public static IEnumerable<Actor> GetActors()
         {
             return ActorDAL.GetActors();
         }
 
+        public static IEnumerable<Actor> GetActorsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
+        {
+            return ActorDAL.GetActorsPageWise(maximumRows, startRowIndex, out totalRowCount);
+        }
+
+        //Hämtar ut en specifik skådespelare
         public static Actor GetActor(int actorId)
         {
             return ActorDAL.GetActorById(actorId);
         }
 
+        //Sparar skådespelare om det inte finns något id, annars så sker en uppdatering av en befintlig skådespelare
         public static void SaveActor(Actor actor)
         {
             ICollection<ValidationResult> validationresults;
@@ -110,6 +123,7 @@ namespace Projekt.Model
         }
 
         //Metoder som har med medverkan att göra
+        //Sparar en roll om det inte finns något id, annars uppdateras en befintlig roll
         public static void SaveStarring(Starring starring)
         {
             ICollection<ValidationResult> validationresults;
@@ -129,6 +143,7 @@ namespace Projekt.Model
             }
         }
 
+        //Tar bort en roll från databasen
         public static void DeleteStarring(Starring starring)
         {
             DeleteStarring(starring.StarringID);
@@ -139,11 +154,13 @@ namespace Projekt.Model
             StarringDAL.DeleteStarring(starringId);
         }
 
+        //Hämtar ut alla roller som tillhör en specifik film i form av en lista
         public static IEnumerable<StarringActor> GetMovieCharacters(int movieId)
         {
             return StarringDAL.GetMovieRoles(movieId);
         }
 
+        //Hämtar ut en specifik roll
         public static Starring GetCharacter(int starringId)
         {
             return StarringDAL.GetCharacterById(starringId);

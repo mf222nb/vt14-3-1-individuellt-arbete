@@ -11,6 +11,7 @@ namespace Projekt.Model.DAL
     {
         private static string _connectionString;
 
+        //Hämtar ut anslutningssträngen från webconfig 
         static DALBase()
         {
             _connectionString = WebConfigurationManager.ConnectionStrings["ProjectContactsConnectionString"].ConnectionString;
