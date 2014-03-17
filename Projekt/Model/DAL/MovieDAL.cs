@@ -167,5 +167,53 @@ namespace Projekt.Model.DAL
                 }
             }
         }
+
+        //Hämtar ut alla filmer som finns i databasen genom att anropa en procedur som hämtar all data som finns på alla id:n som finns
+        public IEnumerable<Movie> GetMoviesPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
+        {
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var movies = new List<Movie>(100);
+
+                    var cmd = new SqlCommand("appSchema.usp_ListMoviesPageWise", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@Start", SqlDbType.Int, 4).Value = startRowIndex;
+                    cmd.Parameters.Add("@Rows", SqlDbType.Int, 4).Value = maximumRows;
+
+                    cmd.Parameters.Add("@Total", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var movieIdIndex = reader.GetOrdinal("MovieID");
+                        var titelIndex = reader.GetOrdinal("Titel");
+                        var lengthIndex = reader.GetOrdinal("Length");
+
+                        while (reader.Read())
+                        {
+                            movies.Add(new Movie
+                            {
+                                MovieID = reader.GetInt32(movieIdIndex),
+                                Titel = reader.GetString(titelIndex),
+                                Length = reader.GetByte(lengthIndex)
+                            });
+                        }
+                    }
+                    totalRowCount = (int)cmd.Parameters["@Total"].Value;
+
+                    movies.TrimExcess();
+
+                    return movies;
+                }
+                catch
+                {
+                    throw new ApplicationException("An error occured while getting movies from the database.");
+                }
+            }
+        }
     }
 }

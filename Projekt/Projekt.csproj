@@ -64,6 +64,7 @@
     <Content Include="Pages\MovieList.aspx" />
     <Content Include="Pages\Shared\Error.aspx" />
     <Content Include="Pages\Shared\Site.Master" />
+    <None Include="Properties\PublishProfiles\mf222nb.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-2.1.0.js" />

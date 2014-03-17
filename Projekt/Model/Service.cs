@@ -53,6 +53,11 @@ namespace Projekt.Model
             return MovieDAL.GetMovies();
         }
 
+        public static IEnumerable<Movie> GetMoviesPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
+        {
+            return MovieDAL.GetMoviesPageWise(maximumRows, startRowIndex, out totalRowCount);
+        }
+
         //Sparar en ny film om id:t inte finns annars om det finns så är det en uppdatering som användaren vill göra.
         public static void SaveMovie(Movie movie)
         {

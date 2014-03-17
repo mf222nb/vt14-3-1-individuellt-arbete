@@ -34,4 +34,11 @@
             </p>
         </EmptyDataTemplate>
     </asp:ListView>
+    <asp:DataPager ID="DataPager1" runat="server" PageSize="20" PagedControlID="MovieListView">
+            <Fields>
+                <asp:NextPreviousPagerField ButtonType="Link" ShowNextPageButton="False" ShowFirstPageButton="True" />
+                <asp:NumericPagerField ButtonType="Link" ButtonCount="10" />
+                <asp:NextPreviousPagerField ButtonType="Link" ShowPreviousPageButton="False" ShowLastPageButton="True" />
+            </Fields>
+        </asp:DataPager>
 </asp:Content>

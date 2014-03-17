@@ -12,7 +12,7 @@ namespace Projekt.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         // The return type can be changed to IEnumerable, however to support
@@ -23,15 +23,16 @@ namespace Projekt.Pages
         //     string sortByExpression
 
         //Listar alla filmer som finns i databasen och presenterar dem och om något går fel så visas ett felmeddelande
-        public IEnumerable<Movie> MovieListView_GetData()
+        public IEnumerable<Movie> MovieListView_GetData(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             try
             {
-                return Service.GetMovies();
+                return Service.GetMoviesPageWise(maximumRows, startRowIndex, out totalRowCount);
             }
             catch
             {
                 ModelState.AddModelError(String.Empty, String.Format("Filmerna hämtades inte"));
+                totalRowCount = 0;
                 return null;
             }
         }

@@ -37,7 +37,7 @@
                     <%# Item.Born.ToString("yyyy-MM-dd") %>
                 </td>
                 <td>
-                    <asp:LinkButton ID="DeleteLinkButton" CssClass="LinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort skådespelaren')"></asp:LinkButton>
+                    <asp:LinkButton ID="DeleteLinkButton" CssClass="LinkButton" runat="server" CommandName="Delete" Text="Ta bort" CausesValidation="false" OnClientClick="return confirm('Är du säker att du vill ta bort skådespelaren, alla roller som skådespelarn är med i kommer också att tas bort')"></asp:LinkButton>
                     <asp:LinkButton ID="EditLinkButton" CssClass="LinkButton" runat="server" CommandName="Edit" Text="Redigera" CausesValidation="false"></asp:LinkButton>
                 </td>
             </tr>
