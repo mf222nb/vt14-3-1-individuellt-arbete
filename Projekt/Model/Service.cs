@@ -30,7 +30,7 @@ namespace Projekt.Model
         }
 
         //Alla metoder som har med filmer att göra
-        //Tar bort en specifik film
+        //Tar bort en specifik film, hämtar ID:t och skickar det vidare till nästa delete metod som vill ha ID:t
         public static void DeleteMovie(Movie movie)
         {
             DeleteMovie(movie.MovieID);
@@ -47,12 +47,7 @@ namespace Projekt.Model
             return MovieDAL.GetMovieById(movieId);
         }
 
-        //Hämtar ut alla fiilmer ur databasen som en lista
-        public static IEnumerable<Movie> GetMovies()
-        {
-            return MovieDAL.GetMovies();
-        }
-
+        //Hämtar ut alla filmer från databasen och räknar rader så att man kan få dem på flera sidor i applikationen
         public static IEnumerable<Movie> GetMoviesPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             return MovieDAL.GetMoviesPageWise(maximumRows, startRowIndex, out totalRowCount);
@@ -96,6 +91,7 @@ namespace Projekt.Model
             return ActorDAL.GetActors();
         }
 
+        //Hämtar ut alla skådespelare från databasen och räknar rader så att man kan få dem på flera sidor i applikationen
         public static IEnumerable<Actor> GetActorsPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             return ActorDAL.GetActorsPageWise(maximumRows, startRowIndex, out totalRowCount);

@@ -73,47 +73,6 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut alla filmer som finns i databasen genom att anropa en procedur som hämtar all data som finns på alla id:n som finns
-        public IEnumerable<Movie> GetMovies()
-        {
-            using (var conn = CreateConnection())
-            {
-                try
-                {
-                    var movies = new List<Movie>(100);
-
-                    var cmd = new SqlCommand("appSchema.usp_ListMovies", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    conn.Open();
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        var movieIdIndex = reader.GetOrdinal("MovieID");
-                        var titelIndex = reader.GetOrdinal("Titel");
-                        var lengthIndex = reader.GetOrdinal("Length");
-
-                        while (reader.Read())
-                        {
-                            movies.Add(new Movie
-                            {
-                                MovieID = reader.GetInt32(movieIdIndex),
-                                Titel = reader.GetString(titelIndex),
-                                Length = reader.GetByte(lengthIndex)
-                            });
-                        }
-                    }
-                    movies.TrimExcess();
-
-                    return movies;
-                }
-                catch
-                {
-                    throw new ApplicationException("An error occured while getting movies from the database.");
-                }
-            }
-        }
-
         //Lägger till en film genom att anropa en lagrad procedur som skapar ett id och lägger till det användaren har skrivit in
         public void InsertMovie(Movie movie)
         {
@@ -168,7 +127,7 @@ namespace Projekt.Model.DAL
             }
         }
 
-        //Hämtar ut alla filmer som finns i databasen genom att anropa en procedur som hämtar all data som finns på alla id:n som finns
+        //Hämtar ut alla filmer som finns i databasen genom att anropa en procedur som hämtar all data som finns i databasen
         public IEnumerable<Movie> GetMoviesPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
         {
             using (var conn = CreateConnection())
